@@ -10,7 +10,7 @@ function App() {
   return (
     <LeadsProvider>
       {" "}
-      {/* ✨ Wrap everything */}
+     
       <BrowserRouter>
         <Layout>
           <Routes>

@@ -15,9 +15,7 @@ function Dashboard() {
   if (error) {
     return <div className="error">{error}</div>;
   }
-  const addNewLead = (newLead) => {
-    setLeads([...leads, newLead]);
-  };
+
   const newCount = leads.filter((lead) => lead.leadStatus === "New").length;
   const contactedCount = leads.filter(
     (lead) => lead.leadStatus === "Contacted"
@@ -37,13 +35,11 @@ function Dashboard() {
       : leads.filter((lead) => lead.leadStatus === activeFilter);
   return (
     <div className="dashboard-container">
-      {/* Header */}
       <div className="dashboard-header">
         <h2>Anvaya CRM Dashboard</h2>
         <p>Welcome to your Lead Management System</p>
       </div>
 
-      {/* Filter Buttons */}
       <div className="filter-buttons">
         <button
           className={`filter-btn ${activeFilter === "All" ? "active" : ""}`}
@@ -89,7 +85,6 @@ function Dashboard() {
         </button>
       </div>
 
-      {/* Stats Cards */}
       <div className="stats-container">
         <div className="stat-card">
           <strong>New</strong>
@@ -113,12 +108,10 @@ function Dashboard() {
         </div>
       </div>
 
-      {/* Form Section */}
       <div className="form-section">
-        <LeadForm onAddLead={addNewLead} />
+        <LeadForm onAddLead={addLead} />
       </div>
 
-      {/* Table */}
       <h3>All Leads ({filteredLeads.length})</h3>
       <table className="leads-table">
         <thead>

@@ -14,6 +14,9 @@ function LeadForm({ onAddLead }) {
 
   const [formData, setFormData] = useState(INITIAL_FORM_STATE);
   const handleInputChange = (fieldName, value) => {
+    console.log("changed:", fieldName, "=>", value);
+
+    console.log("Before update:", formData);
     setFormData({
       ...formData,
       [fieldName]: value,
@@ -23,7 +26,16 @@ function LeadForm({ onAddLead }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+  
+    console.log("Submit attempt. Current formData:", formData);
+
     const values = Object.values(formData);
+
+    values.forEach((v, i) => {
+      if (v === "") {
+        console.log("EMPTY FIELD FOUND at index:", i);
+      }
+    });
 
     const hasEmptyField = values.includes("");
 

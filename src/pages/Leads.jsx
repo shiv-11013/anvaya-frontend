@@ -10,12 +10,12 @@ function Leads() {
     return <div className="loading">Loading...</div>;
   }
 
-  // URL se filters
+  
   const statusFilter = searchParams.get("status") || "All";
   const agentFilter = searchParams.get("agent") || "All";
   const sourceFilter = searchParams.get("source") || "All";
 
-  // Unique values
+  
   const statuses = [
     "All",
     "New",
@@ -27,7 +27,7 @@ function Leads() {
   const agents = ["All", ...new Set(leads.map((lead) => lead.assignedAgent))];
   const sources = ["All", ...new Set(leads.map((lead) => lead.leadSource))];
 
-  // Filter logic
+  
   const filteredLeads = leads.filter((lead) => {
     const matchStatus =
       statusFilter === "All" || lead.leadStatus === statusFilter;

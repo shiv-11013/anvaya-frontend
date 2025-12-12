@@ -1,24 +1,26 @@
-import { useParams, Link, useNavigate } from 'react-router-dom'
-import { useLeads } from '../context/LeadsContext'
-import { useState } from 'react'
-import './LeadDetails.css'
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useLeads } from "../context/LeadsContext";
+import { useState } from "react";
+import "./LeadDetails.css";
 
 function LeadDetails() {
-  const { id } = useParams()
-  const navigate = useNavigate()
-  const { leads, addComment, updateLead, deleteLead } = useLeads()
-  const [newComment, setNewComment] = useState('')
-  const [isEditing, setIsEditing] = useState(false)
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { leads, addComment, updateLead, deleteLead } = useLeads();
+  const [newComment, setNewComment] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
 
-  // Lead find karo - ✨ _id use karo
-  const lead = leads.find(l => l._id === id)
+  const lead = leads.find((l) => l._id === id);
 
-  // Edit form state
-  const [editData, setEditData] = useState(lead ? {
-    leadStatus: lead.leadStatus,
-    assignedAgent: lead.assignedAgent,
-    priority: lead.priority
-  } : {})
+  const [editData, setEditData] = useState(
+    lead
+      ? {
+          leadStatus: lead.leadStatus,
+          assignedAgent: lead.assignedAgent,
+          priority: lead.priority,
+        }
+      : {}
+  );
 
   if (!lead) {
     return (
@@ -27,77 +29,79 @@ function LeadDetails() {
         <p>The lead you're looking for doesn't exist.</p>
         <Link to="/">← Back to Dashboard</Link>
       </div>
-    )
+    );
   }
 
-  // Comment submit
   const handleCommentSubmit = async (e) => {
-    e.preventDefault()
-    if (newComment.trim() === '') {
-      alert('Please enter a comment')
-      return
+    e.preventDefault();
+    if (newComment.trim() === "") {
+      alert("Please enter a comment");
+      return;
     }
     try {
-      await addComment(lead._id, newComment)
-      setNewComment('')
+      await addComment(lead._id, newComment);
+      setNewComment("");
     } catch (err) {
-      alert('Failed to add comment')
+      alert("Failed to add comment");
     }
-  }
+  };
 
-  // Edit submit
   const handleEditSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      await updateLead(lead._id, editData)
-      setIsEditing(false)
-      alert('Lead updated successfully!')
+      await updateLead(lead._id, editData);
+      setIsEditing(false);
+      alert("Lead updated successfully!");
     } catch (err) {
-      alert('Failed to update lead')
+      alert("Failed to update lead");
     }
-  }
+  };
 
-  // Delete
   const handleDelete = async () => {
     if (window.confirm(`Are you sure you want to delete "${lead.leadName}"?`)) {
       try {
-        await deleteLead(lead._id)
-        navigate('/')
-        alert('Lead deleted successfully!')
+        await deleteLead(lead._id);
+        navigate("/");
+        alert("Lead deleted successfully!");
       } catch (err) {
-        alert('Failed to delete lead')
+        alert("Failed to delete lead");
       }
     }
-  }
+  };
 
-  // Format timestamp
   const formatDate = (timestamp) => {
-    const date = new Date(timestamp)
-    const now = new Date()
-    const diffMs = now - date
-    const diffHours = Math.floor(diffMs / (1000 * 60 * 60))
-    const diffDays = Math.floor(diffHours / 24)
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+    const diffDays = Math.floor(diffHours / 24);
 
-    if (diffHours < 1) return 'Just now'
-    if (diffHours < 24) return `${diffHours} hours ago`
-    if (diffDays === 1) return 'Yesterday'
-    return `${diffDays} days ago`
-  }
+    if (diffHours < 1) return "Just now";
+    if (diffHours < 24) return `${diffHours} hours ago`;
+    if (diffDays === 1) return "Yesterday";
+    return `${diffDays} days ago`;
+  };
 
   return (
     <div className="lead-details-container">
-      <Link to="/" className="back-link">← Back to Dashboard</Link>
+      <Link to="/" className="back-link">
+        ← Back to Dashboard
+      </Link>
 
       <div className="lead-header">
         <h2>{lead.leadName}</h2>
-        <span className={`status-badge status-${lead.leadStatus.toLowerCase().replace(' ', '-')}`}>
+        <span
+          className={`status-badge status-${lead.leadStatus
+            .toLowerCase()
+            .replace(" ", "-")}`}
+        >
           {lead.leadStatus}
         </span>
       </div>
 
       <div className="action-buttons">
         <button className="edit-btn" onClick={() => setIsEditing(!isEditing)}>
-          {isEditing ? '✕ Cancel' : '✏️ Edit Lead'}
+          {isEditing ? "✕ Cancel" : "✏️ Edit Lead"}
         </button>
         <button className="delete-btn" onClick={handleDelete}>
           🗑️ Delete Lead
@@ -113,7 +117,9 @@ function LeadDetails() {
                 <label>Status</label>
                 <select
                   value={editData.leadStatus}
-                  onChange={(e) => setEditData({...editData, leadStatus: e.target.value})}
+                  onChange={(e) =>
+                    setEditData({ ...editData, leadStatus: e.target.value })
+                  }
                 >
                   <option value="New">New</option>
                   <option value="Contacted">Contacted</option>
@@ -126,7 +132,9 @@ function LeadDetails() {
                 <label>Assigned Agent</label>
                 <select
                   value={editData.assignedAgent}
-                  onChange={(e) => setEditData({...editData, assignedAgent: e.target.value})}
+                  onChange={(e) =>
+                    setEditData({ ...editData, assignedAgent: e.target.value })
+                  }
                 >
                   <option value="Agent 1">Agent 1</option>
                   <option value="Agent 2">Agent 2</option>
@@ -137,7 +145,9 @@ function LeadDetails() {
                 <label>Priority</label>
                 <select
                   value={editData.priority}
-                  onChange={(e) => setEditData({...editData, priority: e.target.value})}
+                  onChange={(e) =>
+                    setEditData({ ...editData, priority: e.target.value })
+                  }
                 >
                   <option value="High">High</option>
                   <option value="Medium">Medium</option>
@@ -145,7 +155,9 @@ function LeadDetails() {
                 </select>
               </div>
             </div>
-            <button type="submit" className="save-btn">Save Changes</button>
+            <button type="submit" className="save-btn">
+              Save Changes
+            </button>
           </form>
         </div>
       )}
@@ -180,16 +192,20 @@ function LeadDetails() {
 
       <div className="comments-section">
         <h3>💬 Comments ({lead.comments?.length || 0})</h3>
-        
+
         <div className="comments-list">
           {!lead.comments || lead.comments.length === 0 ? (
-            <p className="no-comments">No comments yet. Be the first to add one!</p>
+            <p className="no-comments">
+              No comments yet. Be the first to add one!
+            </p>
           ) : (
             lead.comments.map((comment, index) => (
               <div key={index} className="comment-card">
                 <div className="comment-header">
                   <span className="comment-author">{comment.author}</span>
-                  <span className="comment-time">{formatDate(comment.timestamp)}</span>
+                  <span className="comment-time">
+                    {formatDate(comment.timestamp)}
+                  </span>
                 </div>
                 <p className="comment-text">{comment.text}</p>
               </div>
@@ -208,7 +224,7 @@ function LeadDetails() {
         </form>
       </div>
     </div>
-  )
+  );
 }
 
-export default LeadDetails
+export default LeadDetails;

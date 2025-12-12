@@ -29,13 +29,13 @@ function Reports() {
     return <div className="loading">Loading...</div>;
   }
 
-  // Stats
+  
   const totalLeads = leads.length;
   const closedLeads = leads.filter((l) => l.leadStatus === "Closed").length;
   const openLeads = totalLeads - closedLeads;
   const highPriorityLeads = leads.filter((l) => l.priority === "High").length;
 
-  // Status counts
+  
   const statusCounts = {
     New: leads.filter((l) => l.leadStatus === "New").length,
     Contacted: leads.filter((l) => l.leadStatus === "Contacted").length,
@@ -45,20 +45,20 @@ function Reports() {
     Closed: leads.filter((l) => l.leadStatus === "Closed").length,
   };
 
-  // Agent counts
+  
   const agentCounts = leads.reduce((acc, lead) => {
     acc[lead.assignedAgent] = (acc[lead.assignedAgent] || 0) + 1;
     return acc;
   }, {});
 
-  // Priority counts
+  
   const priorityCounts = {
     High: leads.filter((l) => l.priority === "High").length,
     Medium: leads.filter((l) => l.priority === "Medium").length,
     Low: leads.filter((l) => l.priority === "Low").length,
   };
 
-  // Chart Data
+  
   const statusChartData = {
     labels: Object.keys(statusCounts),
     datasets: [
