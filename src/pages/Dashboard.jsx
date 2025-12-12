@@ -138,7 +138,7 @@ function Dashboard() {
               <td>{lead.timeToClose}</td>
 
               <td>
-                <Link to={`/leads/${lead._id}`} className="view-btn"></Link>
+                <Link to={`/leads/${lead._id}`} className="view-btn">View</Link>
               </td>
             </tr>
           ))}
