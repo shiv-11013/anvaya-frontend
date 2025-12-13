@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useLeads } from "../context/LeadsContext";
 import "../LeadForm.css";
 
 function LeadForm({ onAddLead }) {
+  const { agents } = useLeads();
   const INITIAL_FORM_STATE = {
     leadName: "",
     leadSource: "",
