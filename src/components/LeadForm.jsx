@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLeads } from "../context/LeadsContext";
 import "../LeadForm.css";
+import toast from "react-hot-toast";
 
 function LeadForm({ onAddLead }) {
   const { agents } = useLeads();
@@ -16,50 +17,43 @@ function LeadForm({ onAddLead }) {
 
   const [formData, setFormData] = useState(INITIAL_FORM_STATE);
   const handleInputChange = (fieldName, value) => {
-    console.log("changed:", fieldName, "=>", value);
-
-    console.log("Before update:", formData);
     setFormData({
       ...formData,
       [fieldName]: value,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Submit attempt. Current formData:", formData);
-
     const values = Object.values(formData);
-
-    values.forEach((v, i) => {
-      if (v === "") {
-        console.log("EMPTY FIELD FOUND at index:", i);
-      }
-    });
 
     const hasEmptyField = values.includes("");
 
     if (hasEmptyField) {
-      alert("Please fill all fields!");
+      toast.error("Please fill all fields!");
       return;
     }
+    const loadingToast = toast.loading("Creating lead...");
 
-    const newLead = {
-      id: Date.now(),
-      ...formData,
-      timeToClose: Number(formData.timeToClose),
-    };
-
-    onAddLead(newLead);
-
-    console.log("Form Data:", formData);
-    alert("Lead added successfully!");
-
-    setFormData(INITIAL_FORM_STATE);
+    try {
+      await onAddLead(formData);
+      toast.success("Lead added successfully!", { id: loadingToast }); // ✨ Success
+      setFormData(INITIAL_FORM_STATE);
+    } catch (err) {
+      toast.error("Failed to add lead", { id: loadingToast }); // ✨ Error
+      console.error(err);
+    }
   };
 
-  const isValid = Object.values(formData).every((v) => v !== "");
+  const isValid =
+    formData.leadName.trim() !== "" &&
+    formData.leadSource !== "" &&
+    formData.assignedAgent !== "" &&
+    formData.leadStatus !== "" &&
+    formData.tag !== "" &&
+    formData.timeToClose !== "" &&
+    formData.priority !== "";
 
   return (
     <form onSubmit={handleSubmit}>

@@ -1,6 +1,7 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useLeads } from "../context/LeadsContext";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import "./LeadDetails.css";
 
 function LeadDetails() {
@@ -35,36 +36,42 @@ function LeadDetails() {
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     if (newComment.trim() === "") {
-      alert("Please enter a comment");
+      toast.error("Please enter a comment");
       return;
     }
+
+    const loadingToast = toast.loading("Adding comment...");
     try {
       await addComment(lead._id, newComment);
+      toast.success("Comment added!", { id: loadingToast });
       setNewComment("");
     } catch (err) {
-      alert("Failed to add comment");
+      toast.error("Failed to add comment", { id: loadingToast });
     }
   };
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
+
+    const loadingToast = toast.loading("Updating lead...");
     try {
       await updateLead(lead._id, editData);
+      toast.success("Lead updated successfully!", { id: loadingToast });
       setIsEditing(false);
-      alert("Lead updated successfully!");
     } catch (err) {
-      alert("Failed to update lead");
+      toast.error("Failed to update lead", { id: loadingToast });
     }
   };
 
   const handleDelete = async () => {
     if (window.confirm(`Are you sure you want to delete "${lead.leadName}"?`)) {
+      const loadingToast = toast.loading("Deleting lead...");
       try {
         await deleteLead(lead._id);
+        toast.success("Lead deleted successfully!", { id: loadingToast });
         navigate("/");
-        alert("Lead deleted successfully!");
       } catch (err) {
-        alert("Failed to delete lead");
+        toast.error("Failed to delete lead", { id: loadingToast });
       }
     }
   };

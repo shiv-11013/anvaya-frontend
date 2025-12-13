@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LeadsProvider } from "./context/LeadsContext";
+import { Toaster } from "react-hot-toast";
 import Dashboard from "./pages/Dashboard";
 import Layout from "./components/layout/Layout";
 import Leads from "./pages/Leads";
@@ -10,7 +11,6 @@ function App() {
   return (
     <LeadsProvider>
       {" "}
-     
       <BrowserRouter>
         <Layout>
           <Routes>

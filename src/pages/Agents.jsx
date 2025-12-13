@@ -1,6 +1,7 @@
 import { useLeads } from "../context/LeadsContext";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import "./Agents.css";
 
 function Agents() {
@@ -19,16 +20,17 @@ function Agents() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!newAgent.name || !newAgent.email) {
-      alert("Please fill all fields");
+      toast.error("Please fill all fields");
       return;
     }
+    const loadingToast = toast.loading("Creating agent...");
     try {
       await addAgent(newAgent);
+      toast.success("Agent added successfully!", { id: loadingToast });
       setNewAgent({ name: "", email: "" });
       setShowForm(false);
-      alert("Agent added successfully!");
     } catch (err) {
-      alert("Failed to add agent");
+      toast.error("Failed to add agent", { id: loadingToast });
     }
   };
 
