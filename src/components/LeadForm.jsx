@@ -38,10 +38,10 @@ function LeadForm({ onAddLead }) {
 
     try {
       await onAddLead(formData);
-      toast.success("Lead added successfully!", { id: loadingToast }); // ✨ Success
+      toast.success("Lead added successfully!", { id: loadingToast }); 
       setFormData(INITIAL_FORM_STATE);
     } catch (err) {
-      toast.error("Failed to add lead", { id: loadingToast }); // ✨ Error
+      toast.error("Failed to add lead", { id: loadingToast }); 
       console.error(err);
     }
   };

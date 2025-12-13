@@ -12,6 +12,7 @@ function App() {
     <LeadsProvider>
       {" "}
       <BrowserRouter>
+        <Toaster position="top-right" />
         <Layout>
           <Routes>
             <Route path="/" element={<Dashboard />} />
