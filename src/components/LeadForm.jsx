@@ -26,7 +26,6 @@ function LeadForm({ onAddLead }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-  
     console.log("Submit attempt. Current formData:", formData);
 
     const values = Object.values(formData);
@@ -85,9 +84,11 @@ function LeadForm({ onAddLead }) {
         onChange={(e) => handleInputChange("assignedAgent", e.target.value)}
       >
         <option value="">Select Agent</option>
-        <option value="Agent 1">Agent 1</option>
-        <option value="Agent 2">Agent 2</option>
-        <option value="Agent 3">Agent 3</option>
+        {agents.map((agent) => (
+          <option key={agent._id} value={agent.name}>
+            {agent.name}
+          </option>
+        ))}
       </select>{" "}
       <br />
       <br />
