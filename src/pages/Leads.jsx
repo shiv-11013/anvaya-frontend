@@ -3,7 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import "./Leads.css";
 
 function Leads() {
-  const { leads, loading } = useLeads();
+  const { leads, loading , agents } = useLeads();
   const [searchParams, setSearchParams] = useSearchParams();
 
   if (loading) {
@@ -24,7 +24,7 @@ function Leads() {
     "Proposal Sent",
     "Closed",
   ];
-  const agents = ["All", ...new Set(leads.map((lead) => lead.assignedAgent))];
+  // const agents = ["All", ...new Set(leads.map((lead) => lead.assignedAgent))];
   const sources = ["All", ...new Set(leads.map((lead) => lead.leadSource))];
 
   
@@ -78,8 +78,8 @@ function Leads() {
             onChange={(e) => updateFilter("agent", e.target.value)}
           >
             {agents.map((a) => (
-              <option key={a} value={a}>
-                {a}
+              <option key={a._id} value={a.name}>
+                {a.name}
               </option>
             ))}
           </select>
