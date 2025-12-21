@@ -1,12 +1,112 @@
-# React + Vite
+# Anvaya CRM - Lead Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack Customer Relationship Management (CRM) application built to help sales teams efficiently manage leads, track progress, and visualize sales data.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Demo Link
 
-## Expanding the ESLint configuration
+[Live Demo](https://anvaya-frontend-git-main-shivs-projects-5cdfdbed.vercel.app)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Demo Video
+
+Watch a walkthrough (5-7 minutes) of all the major features of this app:
+[Loom Video]()
+
+---
+
+## Features
+
+### Lead Management
+
+- Create, Read, Update, Delete (CRUD) operations for leads
+- Track leads through different stages (New → Contacted → Qualified → Proposal Sent → Closed)
+- Assign leads to sales agents
+- Priority-based lead categorization (High, Medium, Low)
+- Tag-based lead organization
+
+### Real-time Collaboration
+
+- 💬 Commenting system for lead updates
+- 👥 Sales agent management
+- 🔄 Real-time data synchronization
+
+### Analytics & Reporting
+
+- 📊 Interactive data visualizations (Pie, Bar, Doughnut charts)
+- 📈 Lead status distribution
+- 👤 Leads by sales agent
+- 🎯 Priority breakdown
+
+### Advanced Filtering
+
+- 🔍 Filter leads by status, agent, and source
+- 🔗 URL-based filtering for shareable links
+- 📋 Multi-parameter filter combinations
+
+### Frontend
+
+- **React.js** - UI library
+- **React Router** - Client-side routing
+- **Context API** - Global state management
+- **Axios** - HTTP client for API calls
+- **Chart.js** - Data visualization
+- **React Hot Toast** - Toast notifications
+- **CSS3** - Styling (Flexbox, Grid, Dark theme)
+
+### Backend
+
+- **Node.js** - JavaScript runtime
+- **Express.js** - Web framework
+- **MongoDB** - NoSQL database
+- **Mongoose** - ODM for MongoDB
+
+### Deployment
+
+- **Vercel** - Frontend hosting
+- **Render** - Backend hosting
+- **MongoDB Atlas** - Cloud database
+
+---
+
+## API Endpoints
+
+### Leads
+
+- `GET /api/leads` - Get all leads (with optional filters)
+- `GET /api/leads/:id` - Get single lead
+- `POST /api/leads` - Create new lead
+- `PATCH /api/leads/:id` - Update lead
+- `DELETE /api/leads/:id` - Delete lead
+- `POST /api/leads/:id/comments` - Add comment to lead
+
+### Agents
+
+- `GET /api/agents` - Get all sales agents
+- `POST /api/agents` - Create new agent
+
+---
+
+## 🔌 API Endpoints
+
+### Leads
+
+- `GET /api/leads` - Get all leads (with optional filters)
+- `GET /api/leads/:id` - Get single lead
+- `POST /api/leads` - Create new lead
+- `PATCH /api/leads/:id` - Update lead
+- `DELETE /api/leads/:id` - Delete lead
+- `POST /api/leads/:id/comments` - Add comment to lead
+
+### Agents
+
+- `GET /api/agents` - Get all sales agents
+- `POST /api/agents` - Create new agent
+
+---
+
+## Contact
+
+For bugs or features request, please reach out to chandelshiv315@gmail.com
