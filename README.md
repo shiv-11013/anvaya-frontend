@@ -89,6 +89,32 @@ Watch a walkthrough (5-7 minutes) of all the major features of this app:
 
 ---
 
+## 💻 Usage Examples
+
+### Create a Lead
+
+```javascript
+{
+  "leadName": "Acme Corp",
+  "leadSource": "Website",
+  "assignedAgent": "Agent 1",
+  "leadStatus": "New",
+  "tag": "High Value",
+  "priority": "High",
+  "timeToClose": 30
+}
+```
+
+### Filter Leads by URL
+
+```
+/leads?status=New
+/leads?agent=Agent 1&status=Contacted
+/leads?source=Website&priority=High
+```
+
+---
+
 ## 🔌 API Endpoints
 
 ### Leads
