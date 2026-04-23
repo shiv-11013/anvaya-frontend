@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, useEffect } from 'react'
 import * as api from '../services/api'
+import { useAuth } from './AuthContext'
 
 const LeadsContext = createContext()
 
@@ -8,11 +9,17 @@ export function LeadsProvider({ children }) {
   const [agents, setAgents] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const { user } = useAuth()
 
-  
   useEffect(() => {
-    fetchInitialData()
-  }, [])
+    if (user) {
+      fetchInitialData()
+    } else {
+      setLeads([])
+      setAgents([])
+      setLoading(false)
+    }
+  }, [user])
 
   const fetchInitialData = async () => {
     try {
@@ -32,7 +39,6 @@ export function LeadsProvider({ children }) {
     }
   }
 
-  
   const addLead = async (leadData) => {
     try {
       const newLead = await api.createLead(leadData)
@@ -44,11 +50,10 @@ export function LeadsProvider({ children }) {
     }
   }
 
- 
   const updateLead = async (id, leadData) => {
     try {
       const updatedLead = await api.updateLead(id, leadData)
-      setLeads(leads.map(lead => 
+      setLeads(leads.map(lead =>
         lead._id === id ? updatedLead : lead
       ))
       return updatedLead
@@ -71,10 +76,10 @@ export function LeadsProvider({ children }) {
   const addComment = async (leadId, commentText) => {
     try {
       const updatedLead = await api.addComment(leadId, {
-        author: 'Current User',
+        author: user?.name || 'Unknown',  // ✅ hardcoded 'Current User' fix
         text: commentText
       })
-      setLeads(leads.map(lead => 
+      setLeads(leads.map(lead =>
         lead._id === leadId ? updatedLead : lead
       ))
       return updatedLead
@@ -84,7 +89,6 @@ export function LeadsProvider({ children }) {
     }
   }
 
-  
   const addAgent = async (agentData) => {
     try {
       const newAgent = await api.createAgent(agentData)
@@ -97,12 +101,12 @@ export function LeadsProvider({ children }) {
   }
 
   return (
-    <LeadsContext.Provider value={{ 
-      leads, 
+    <LeadsContext.Provider value={{
+      leads,
       agents,
       loading,
       error,
-      addLead, 
+      addLead,
       updateLead,
       deleteLead,
       addComment,
