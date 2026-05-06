@@ -135,4 +135,4 @@ Watch a walkthrough (5-7 minutes) of all the major features of this app:
 
 ## Contact
 
-For bugs or features request, please reach out to chandelshiv315@gmail.com
+For bugs or features request, please reach out to shivkumar121112@gmail.com
