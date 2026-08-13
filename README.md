@@ -1,97 +1,71 @@
-# Anvaya CRM - Lead Management System
+# Anvaya CRM — Lead Management System
 
-A full-stack Customer Relationship Management (CRM) application built to help sales teams efficiently manage leads, track progress, and visualize sales data.
+A full-stack CRM I built for sales teams to actually manage their lead pipeline — track where each lead is in the funnel, assign it to an agent, comment on it, and see the whole thing visualized instead of buried in a spreadsheet.
 
----
+This one was less about learning a specific auth pattern (did that in KaviosPix) and more about handling a proper data-heavy app — filtering, relationships between leads/agents/comments, and turning that data into charts that actually mean something.
 
-## Demo Link
+Live: https://anvaya-frontend-git-main-shivs-projects-5cdfdbed.vercel.app
 
-[Live Demo](https://anvaya-frontend-git-main-shivs-projects-5cdfdbed.vercel.app)
+*(Loom walkthrough — will add once I record it)*
 
----
+## What it does
 
-## Demo Video
+**Lead management**
+- Full CRUD on leads
+- Leads move through stages: New → Contacted → Qualified → Proposal Sent → Closed
+- Each lead gets assigned to a sales agent
+- Priority tagging — High/Medium/Low
+- Custom tags for organizing leads beyond just status
 
-Watch a walkthrough (5-7 minutes) of all the major features of this app:
-[Loom Video]()
+**Collaboration**
+- Comment thread on each lead, so the team can log updates/context without losing history
+- Sales agent management (add/view agents)
 
----
+**Analytics**
+- Pie/bar/doughnut charts (Chart.js) for lead status distribution, leads-per-agent, and priority breakdown
+- Basically turning the raw lead table into something a sales manager could actually glance at and understand
 
-## Features
+**Filtering**
+- Filter by status, agent, or source
+- Filters are reflected in the URL, so a filtered view is shareable/bookmarkable — this was a deliberate choice so someone could send a teammate a link like `/leads?agent=Agent 1&status=Contacted` and they'd land on exactly that view
+- Multiple filters can be combined at once
 
-### Lead Management
+## Stack
 
-- Create, Read, Update, Delete (CRUD) operations for leads
-- Track leads through different stages (New → Contacted → Qualified → Proposal Sent → Closed)
-- Assign leads to sales agents
-- Priority-based lead categorization (High, Medium, Low)
-- Tag-based lead organization
+**Frontend**
+- React + React Router
+- Context API for global state (auth/agents mostly — didn't reach for Redux since the app doesn't need it at this size)
+- Axios
+- Chart.js for the visualizations
+- React Hot Toast for notifications
+- Plain CSS3 — flexbox/grid, dark theme
 
-### Real-time Collaboration
+**Backend**
+- Node + Express
+- MongoDB + Mongoose
 
-- 💬 Commenting system for lead updates
-- 👥 Sales agent management
-- 🔄 Real-time data synchronization
+**Deployment**
+- Frontend on Vercel, backend on Render, DB on Atlas
 
-### Analytics & Reporting
+## API
 
-- 📊 Interactive data visualizations (Pie, Bar, Doughnut charts)
-- 📈 Lead status distribution
-- 👤 Leads by sales agent
-- 🎯 Priority breakdown
+**Leads**
+```
+GET     /api/leads              Get all leads (supports filters)
+GET     /api/leads/:id          Get a single lead
+POST    /api/leads              Create a lead
+PATCH   /api/leads/:id          Update a lead
+DELETE  /api/leads/:id          Delete a lead
+POST    /api/leads/:id/comments Add a comment to a lead
+```
 
-### Advanced Filtering
+**Agents**
+```
+GET   /api/agents    Get all sales agents
+POST  /api/agents    Create a new agent
+```
 
-- 🔍 Filter leads by status, agent, and source
-- 🔗 URL-based filtering for shareable links
-- 📋 Multi-parameter filter combinations
-
-### Frontend
-
-- **React.js** - UI library
-- **React Router** - Client-side routing
-- **Context API** - Global state management
-- **Axios** - HTTP client for API calls
-- **Chart.js** - Data visualization
-- **React Hot Toast** - Toast notifications
-- **CSS3** - Styling (Flexbox, Grid, Dark theme)
-
-### Backend
-
-- **Node.js** - JavaScript runtime
-- **Express.js** - Web framework
-- **MongoDB** - NoSQL database
-- **Mongoose** - ODM for MongoDB
-
-### Deployment
-
-- **Vercel** - Frontend hosting
-- **Render** - Backend hosting
-- **MongoDB Atlas** - Cloud database
-
----
-
-## API Endpoints
-
-### Leads
-
-- `GET /api/leads` - Get all leads (with optional filters)
-- `GET /api/leads/:id` - Get single lead
-- `POST /api/leads` - Create new lead
-- `PATCH /api/leads/:id` - Update lead
-- `DELETE /api/leads/:id` - Delete lead
-- `POST /api/leads/:id/comments` - Add comment to lead
-
-### Agents
-
-- `GET /api/agents` - Get all sales agents
-- `POST /api/agents` - Create new agent
-
----
-
-## 💻 Usage Examples
-
-### Create a Lead
+## Example — creating a lead
 
 ```javascript
 {
@@ -105,7 +79,7 @@ Watch a walkthrough (5-7 minutes) of all the major features of this app:
 }
 ```
 
-### Filter Leads by URL
+## URL-based filtering
 
 ```
 /leads?status=New
@@ -113,26 +87,8 @@ Watch a walkthrough (5-7 minutes) of all the major features of this app:
 /leads?source=Website&priority=High
 ```
 
----
-
-## 🔌 API Endpoints
-
-### Leads
-
-- `GET /api/leads` - Get all leads (with optional filters)
-- `GET /api/leads/:id` - Get single lead
-- `POST /api/leads` - Create new lead
-- `PATCH /api/leads/:id` - Update lead
-- `DELETE /api/leads/:id` - Delete lead
-- `POST /api/leads/:id/comments` - Add comment to lead
-
-### Agents
-
-- `GET /api/agents` - Get all sales agents
-- `POST /api/agents` - Create new agent
-
----
+Went with query params here instead of keeping filter state purely client-side because it makes the filtered view something you can actually link to someone — a sales manager could send "here's everyone stuck at Proposal Sent" as a URL instead of describing which filters to click.
 
 ## Contact
 
-For bugs or features request, please reach out to shivkumar121112@gmail.com
+Bugs or feature requests: shivkumar121112@gmail.com
